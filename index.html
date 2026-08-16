@@ -30,6 +30,7 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
+  body.menu-open{overflow:hidden;}
   a{color:inherit;text-decoration:none;}
   img,svg{display:block;max-width:100%;}
   .eyebrow{
@@ -538,7 +539,7 @@
   @media(max-width:1100px){
     .navlinks,.navcta{display:none;}
     .burger{display:flex;}
-    .mobile-drawer{display:flex;}
+    .mobile-drawer{display:block;}
   }
 
   @media(max-width:819px){
@@ -561,12 +562,28 @@
     header{padding:7px 0;}
     .brand{height:58px;}
     .brand .brand-logo{width:235px;}
-    .hero{height:690px;padding-bottom:44px;}
-    .hero-photo{inset:0;height:100%;object-fit:cover;object-position:54% center;}
-    .hero .eyebrow{line-height:1.6;max-width:34ch;}
+    .hero{height:640px;padding:112px 0 54px;}
+    .hero-photo{inset:0;height:100%;object-fit:cover;object-position:48% center;}
+    .hero-veil{background:linear-gradient(90deg,rgba(10,35,30,.82) 0%,rgba(10,35,30,.62) 70%,rgba(10,35,30,.24) 100%),linear-gradient(180deg,rgba(10,28,25,.14),rgba(10,28,25,.38));}
+    .hero .hero-inner{justify-content:center;}
+    .hero .eyebrow{font-size:.61rem;line-height:1.55;max-width:32ch;margin-bottom:22px;}
+    .hero h1{font-size:clamp(2.45rem,10.5vw,2.8rem);line-height:1.02;margin-bottom:24px;}
+    .hero p{font-size:.98rem;line-height:1.65;margin-bottom:28px;}
     .hero-ctas{gap:10px;}
     .hero .btn{width:100%;justify-content:center;}
     .platform{padding-top:56px;padding-bottom:88px;}
+    .mobile-drawer{padding:18px 24px 42px;}
+    .drawer-top{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--line);}
+    .drawer-top .brand .brand-logo{width:220px;}
+    .drawer-close{font-size:2.2rem;padding:8px;}
+    .drawer-links{gap:0;margin-bottom:30px;border-bottom:1px solid var(--line);}
+    .drawer-links > a{font-size:1.55rem;padding:14px 0;border-top:1px solid var(--line);}
+    .drawer-links > a:first-child{border-top:0;}
+    .drawer-heading{margin-bottom:8px;}
+    .drawer-firm{padding:20px 0;}
+    .drawer-firm h4{font-size:1.35rem;}
+    .drawer-firm p{font-size:.9rem;line-height:1.6;max-width:36ch;}
+    .mobile-drawer>.btn{width:100%;justify-content:center;margin-top:24px!important;}
   }
 </style>
 </head>
@@ -618,12 +635,12 @@
         <a href="#contact">Contact</a>
       </div>
       <a href="mailto:info@firgroup.org?subject=Consultation%20Request%20%E2%80%94%20The%20Fir%20Group&body=Hi%20Fir%20Group%20team%2C%0A%0AI%20would%20like%20to%20schedule%20a%20consultation.%20Here%20is%20a%20bit%20about%20what%20I%20need%20help%20with%3A%0A%0A" class="btn navcta">Start a Conversation</a>
-      <button class="burger" id="burgerBtn" aria-label="Open menu">&#9776;</button>
+      <button class="burger" id="burgerBtn" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false">&#9776;</button>
     </nav>
   </div>
 </header>
 
-<div class="mobile-drawer" id="mobileDrawer">
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
   <div class="drawer-top">
     <div class="brand">
       <img src="assets/fir-group-logo.png" alt="The Fir Group" class="brand-logo">
@@ -859,9 +876,22 @@
   const burgerBtn = document.getElementById('burgerBtn');
   const drawerClose = document.getElementById('drawerClose');
   const mobileDrawer = document.getElementById('mobileDrawer');
-  burgerBtn.addEventListener('click', () => mobileDrawer.classList.add('open'));
-  drawerClose.addEventListener('click', () => mobileDrawer.classList.remove('open'));
-  mobileDrawer.querySelectorAll('.drawer-link').forEach(a => a.addEventListener('click', () => mobileDrawer.classList.remove('open')));
+  function openMobileDrawer(){
+    mobileDrawer.classList.add('open');
+    mobileDrawer.setAttribute('aria-hidden','false');
+    burgerBtn.setAttribute('aria-expanded','true');
+    document.body.classList.add('menu-open');
+  }
+  function closeMobileDrawer(){
+    mobileDrawer.classList.remove('open');
+    mobileDrawer.setAttribute('aria-hidden','true');
+    burgerBtn.setAttribute('aria-expanded','false');
+    document.body.classList.remove('menu-open');
+  }
+  burgerBtn.addEventListener('click', openMobileDrawer);
+  drawerClose.addEventListener('click', closeMobileDrawer);
+  mobileDrawer.querySelectorAll('.drawer-link').forEach(a => a.addEventListener('click', closeMobileDrawer));
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMobileDrawer(); });
 
   // scroll reveal
   const revealEls = document.querySelectorAll('[data-reveal]');
