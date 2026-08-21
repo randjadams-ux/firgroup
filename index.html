@@ -526,6 +526,15 @@
   .firm .firm-lead{font-weight:500; opacity:.9; font-size:.96rem;}
   .firm .firm-link{margin-top:auto; padding-top:26px; border-top:1px solid var(--line-dark);}
   .firm small{display:block; margin-top:24px; color:rgba(51,51,51,.55); font-size:.72rem;}
+  .structure-note{
+    max-width:980px;
+    margin:34px auto 0;
+    color:rgba(247,244,237,.72);
+    font-size:.84rem;
+    line-height:1.7;
+    text-align:center;
+  }
+  .structure-note strong{color:rgba(247,244,237,.92); font-weight:600;}
 
   @media(min-width:820px){
     .hero{
@@ -554,6 +563,14 @@
   .cta>.wrap{max-width:1320px;}
   .cta-panel{padding:clamp(54px,6vw,78px); border-radius:6px; box-shadow:0 24px 60px rgba(18,45,39,.12);}
   footer{padding:48px 0;}
+  .footer-disclaimer{
+    margin-top:28px;
+    padding-top:24px;
+    border-top:1px solid rgba(247,244,237,.12);
+    color:rgba(247,244,237,.48);
+    font-size:.7rem;
+    line-height:1.65;
+  }
 
   @media(max-width:1100px){
     .navlinks,.navcta{display:none;}
@@ -619,7 +636,7 @@
         <a href="#about">About</a>
         <div class="nav-item" id="firmsNavItem">
           <button class="nav-trigger" id="firmsTrigger" aria-expanded="false" aria-controls="firmsDropdown">
-            Our Firms
+            Our Practices
             <svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <div class="firms-dropdown" id="firmsDropdown">
@@ -627,7 +644,7 @@
               <div class="hierarchy-parent">
                 <img src="assets/fir-group-logo.png" alt="The Fir Group" class="dropdown-logo">
               </div>
-              <p class="hierarchy-sub">Parent brand &mdash; three specialized firms</p>
+              <p class="hierarchy-sub">Shared brand &mdash; three independent practices</p>
               <svg class="hierarchy-lines" viewBox="0 0 900 34" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M450 0 V10 M150 10 H750 M150 10 V34 M450 10 V34 M750 10 V34" stroke="rgba(247,244,237,0.3)" stroke-width="1" fill="none"/>
               </svg>
@@ -672,7 +689,7 @@
     <a href="#values" class="drawer-link">Values</a>
     <a href="#contact" class="drawer-link">Contact</a>
   </div>
-  <p class="drawer-heading">Our Firms</p>
+  <p class="drawer-heading">Our Practices</p>
   <div class="drawer-firm">
     <h4>Fir Law Group</h4>
     <p>Legal counsel and advocacy in employment, litigation, land use, and compliance.</p>
@@ -705,7 +722,7 @@
   <div class="wrap">
     <div class="platform-head" data-reveal>
       <p class="eyebrow">The Fir Group</p>
-      <h2>One Group. Three Specialized Firms.</h2>
+      <h2>Three Independent Practices. One Shared Standard.</h2>
       <p class="platform-intro">A shared standard of integrity, independence, and practical results.</p>
     </div>
     <div class="firm-tree" aria-hidden="true">
@@ -718,7 +735,7 @@
         <p class="firm-lead">Legal counsel and advocacy</p>
         <p>Employment · Litigation · Land Use · Compliance</p>
         <a class="firm-link" href="https://firlawgroup.com" target="_blank" rel="noopener noreferrer">Visit firlawgroup.com <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <small>Part of The Fir Group</small>
+        <small>Independent Oregon law firm &middot; Legal services provided exclusively through Oregon-licensed counsel</small>
       </article>
       <article class="firm" id="fir-forensics" data-reveal style="transition-delay:.1s">
         <svg class="firm-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="10" stroke="currentColor" stroke-width="1.5"/><line x1="25" y1="25" x2="34" y2="34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -726,7 +743,7 @@
         <p class="firm-lead">Independent workplace investigations</p>
         <p>Ethics · Compliance · Objectivity</p>
         <a class="firm-link" href="https://firforensics.com" target="_blank" rel="noopener noreferrer">Visit firforensics.com <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <small>Part of The Fir Group</small>
+        <small>Independent non-legal practice &middot; Engagement does not create an attorney-client relationship</small>
       </article>
       <article class="firm" id="fir-advisors" data-reveal style="transition-delay:.2s">
         <svg class="firm-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M6 30l8-10 6 6 12-16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 10h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -734,9 +751,10 @@
         <p class="firm-lead">Technology, Operations, Growth &amp; AI Advisory</p>
         <p>Law Firms · Nonprofits · Municipalities · Growing Organizations</p>
         <a class="firm-link" href="https://firsolutions.org" target="_blank" rel="noopener noreferrer">Visit firsolutions.org <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <small>Part of The Fir Group</small>
+        <small>Independent non-legal practice &middot; Engagement does not create an attorney-client relationship</small>
       </article>
     </div>
+    <p class="structure-note"><strong>The Fir Group is a shared brand, not a law firm or parent company.</strong> Fir Law Group LLC, Fir Forensics, and Fir Solutions are independently operated entities. Fir Law Group LLC alone provides legal services and exercises independent professional judgment.</p>
   </div>
 </section>
 
@@ -824,7 +842,7 @@
       </div>
       <div class="contact-block">
         <div class="contact-row">
-          <span class="eyebrow">Managing Partners</span>
+          <span class="eyebrow">Leadership</span>
           <span>Ryan Adams &amp; Rick Adams</span>
         </div>
         <div class="contact-row">
@@ -857,6 +875,7 @@
     </div>
     <span>&copy; 2026 The Fir Group. All rights reserved.</span>
   </div>
+  <p class="wrap footer-disclaimer">Fir Law Group LLC is an independent Oregon law firm solely owned by J. Ryan Adams. The Fir Group does not own or control the law firm. Fir Forensics and Fir Solutions provide non-legal services and do not share legal fees with Fir Law Group LLC.</p>
 </footer>
 
 <script>
