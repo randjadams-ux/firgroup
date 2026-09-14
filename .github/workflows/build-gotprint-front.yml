@@ -25,10 +25,10 @@ jobs:
       - name: Upload GotPrint production front
         uses: actions/upload-artifact@v4
         with:
-          name: Fir-Group-GotPrint-Front-Production
+          name: Fir-Group-GotPrint-Front-Production-v3
           path: |
-            print-output/Fir-Group-GotPrint-Front-2100x1400-350DPI.png
-            print-output/Fir-Group-GotPrint-Front-6x4-Print.pdf
+            print-output/Fir-Group-GotPrint-Front-v3-2100x1400-350DPI.png
+            print-output/Fir-Group-GotPrint-Front-v3-6x4-Print.pdf
             print-output/VALIDATION.txt
           if-no-files-found: error
       - name: Publish production files on this isolated branch
