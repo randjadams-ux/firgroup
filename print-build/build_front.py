@@ -4,7 +4,7 @@ import qrcode
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import landscape
 from reportlab.lib.units import inch
-from reportlab.lib.colors import CMYKColor
+from reportlab.lib.colors import CMYKColor, HexColor
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import ImageReader
@@ -119,7 +119,7 @@ def build_png():
     centered(d, (1025, 1282), "firgroup.org", font(FONT_SERIF_BOLD, 105), FOREST)
     qr, matrix = qr_image(145)
     img.paste(qr, (1905, 1210))
-    img.save(OUT / "Fir-Group-GotPrint-Front-2100x1400-350DPI.png", dpi=(350,350), optimize=True)
+    img.save(OUT / "Fir-Group-GotPrint-Front-v3-2100x1400-350DPI.png", dpi=(350,350), optimize=True)
     return matrix
 
 def cmyk(rgb):
@@ -140,13 +140,13 @@ def pdf_line(c, x1,y1,x2,y2,color,width):
     c.setStrokeColor(color); c.setLineWidth(width); c.line(x1,y1,x2,y2)
 
 def build_pdf(matrix):
-    path=OUT/"Fir-Group-GotPrint-Front-6x4-Print.pdf"
+    path=OUT/"Fir-Group-GotPrint-Front-v3-6x4-Print.pdf"
     pdfmetrics.registerFont(TTFont("FirSans", FONT_SANS))
     pdfmetrics.registerFont(TTFont("FirSansBold", FONT_SANS_BOLD))
     pdfmetrics.registerFont(TTFont("FirSerifBold", FONT_SERIF_BOLD))
     pw,ph=6*inch,4*inch
     c=canvas.Canvas(str(path),pagesize=(pw,ph),pageCompression=1)
-    cream,forest,sage,taupe=map(cmyk,(CREAM,FOREST,SAGE,TAUPE))
+    cream,forest,sage,taupe=HexColor('#F7F4ED'),HexColor('#093931'),HexColor('#6F8576'),HexColor('#D2CDC2')
     c.setFillColor(cream); c.rect(0,0,pw,ph,stroke=0,fill=1)
 
     def X(v): return v*S
@@ -215,8 +215,8 @@ def build_pdf(matrix):
 
     pdf_text(c,X(1025),Y(1310),"firgroup.org","FirSerifBold",22,forest)
     n=len(matrix); module=X(145)/n; ox=X(1905); oy=Y(1210+145)
-    c.setFillColor(cmyk((255,255,255))); c.rect(ox,oy,X(145),X(145),stroke=0,fill=1)
-    c.setFillColor(cmyk(BLACK))
+    c.setFillColor(HexColor('#FFFFFF')); c.rect(ox,oy,X(145),X(145),stroke=0,fill=1)
+    c.setFillColor(HexColor('#000000'))
     for row,line in enumerate(matrix):
         for col,on in enumerate(line):
             if on: c.rect(ox+col*module,oy+(n-1-row)*module,module+0.03,module+0.03,stroke=0,fill=1)
@@ -231,7 +231,7 @@ def validate():
     qr_crop=cv2.imread(str(png))[1200:1390,1885:2085]
     decoded,_,_=cv2.QRCodeDetector().detectAndDecode(qr_crop)
     assert decoded=="https://firgroup.org", decoded
-    reader=PdfReader(str(OUT/"Fir-Group-GotPrint-Front-6x4-Print.pdf"))
+    reader=PdfReader(str(OUT/"Fir-Group-GotPrint-Front-v3-6x4-Print.pdf"))
     box=reader.pages[0].mediabox
     assert abs(float(box.width)-432)<0.1 and abs(float(box.height)-288)<0.1
     (OUT/"VALIDATION.txt").write_text(
