@@ -83,13 +83,21 @@ def qr_image(size):
     qr.make(fit=True)
     return qr.make_image(fill_color="black", back_color="white").convert("RGB").resize((size,size), Image.Resampling.NEAREST), qr.get_matrix()
 
+def draw_logo_png(draw):
+    cx, cy, r = 590, 148, 105
+    draw.ellipse((cx-r,cy-r,cx+r,cy+r), outline=FOREST, width=8)
+    draw.line((cx,cy-67,cx,cy+70), fill=FOREST, width=10)
+    tiers=[(-54,36),(-22,51),(12,63),(47,74)]
+    for yy,half in tiers:
+        draw.polygon([(cx,cy+yy-31),(cx-half,cy+yy+24),(cx-11,cy+yy+18),(cx,cy+yy+5),(cx+11,cy+yy+18),(cx+half,cy+yy+24)],fill=FOREST)
+    centered(draw,(1190,145),"THE FIR GROUP",font(FONT_SERIF_BOLD,105),FOREST)
+    draw.rectangle((1020,245,1360,252),fill=SAGE)
+
 def build_png():
     img = Image.new("RGB", (W,H), CREAM)
     d = ImageDraw.Draw(img)
 
-    logo = Image.open(ROOT / "assets" / "fir-group-logo.png").convert("RGBA")
-    logo = contain(logo, 1220, 250)
-    img.paste(logo, ((W-logo.width)//2, 45), logo)
+    draw_logo_png(d)
 
     d.line((700, 405, 700, 710), fill=TAUPE, width=4)
     d.line((1400, 405, 1400, 710), fill=TAUPE, width=4)
@@ -117,8 +125,8 @@ def build_png():
 def cmyk(rgb):
     r,g,b=[v/255 for v in rgb]
     k=1-max(r,g,b)
-    if k >= .999: return CMYKColor(0,0,0,1)
-    return CMYKColor((1-r-k)/(1-k),(1-g-k)/(1-k),(1-b-k)/(1-k),k)
+    if k >= .999: return CMYKColor(0,0,0,100)
+    return CMYKColor(100*(1-r-k)/(1-k),100*(1-g-k)/(1-k),100*(1-b-k)/(1-k),100*k)
 
 def pdf_text(c, x, y, text, font_name, size, color, leading=None):
     c.setFillColor(color)
@@ -141,11 +149,18 @@ def build_pdf(matrix):
     cream,forest,sage,taupe=map(cmyk,(CREAM,FOREST,SAGE,TAUPE))
     c.setFillColor(cream); c.rect(0,0,pw,ph,stroke=0,fill=1)
 
-    # Logo as the exact supplied brand asset.
-    logo=Image.open(ROOT/"assets"/"fir-group-logo.png").convert("RGBA")
-    ratio=min(1220/logo.width,250/logo.height)
-    lw,lh=logo.width*ratio*S,logo.height*ratio*S
-    c.drawImage(ImageReader(logo), (pw-lw)/2, ph-(45*S)-lh, width=lw,height=lh,mask="auto")
+    # High-contrast vector Fir Group logo for the cream background.
+    cx,cy,r=X(590),Y(148),X(105)
+    c.setStrokeColor(forest); c.setFillColor(forest); c.setLineWidth(X(8))
+    c.circle(cx,cy,r,stroke=1,fill=0)
+    c.setLineWidth(X(10)); c.line(cx,Y(81),cx,Y(218))
+    for yy,half in [(-54,36),(-22,51),(12,63),(47,74)]:
+        p=c.beginPath()
+        p.moveTo(cx,Y(148+yy-31)); p.lineTo(X(590-half),Y(148+yy+24)); p.lineTo(X(579),Y(148+yy+18))
+        p.lineTo(cx,Y(148+yy+5)); p.lineTo(X(601),Y(148+yy+18)); p.lineTo(X(590+half),Y(148+yy+24)); p.close()
+        c.drawPath(p,stroke=0,fill=1)
+    pdf_text(c,X(1190),Y(170),"THE FIR GROUP","FirSerifBold",21.6,forest)
+    c.setFillColor(sage); c.rect(X(1020),Y(252),X(340),X(7),stroke=0,fill=1)
 
     # Pixel-design coordinates transformed to PDF, with Y flipped.
     def X(v): return v*S
