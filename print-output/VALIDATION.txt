@@ -1,0 +1,5 @@
+PASS
+PNG: 2100 x 1400 pixels, 350 DPI
+PDF: 6.000 x 4.000 inches
+QR decoded: https://firgroup.org
+Full-bleed background/photo reaches page edges
