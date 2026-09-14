@@ -1,0 +1,6 @@
+PASS
+Design: approved three-firm hierarchy front
+PNG: 2100 x 1400 pixels, 350 DPI
+PDF: 6.000 x 4.000 inches
+QR decoded: https://firgroup.org
+Full-bleed header, photograph, and cream field reach page edges
