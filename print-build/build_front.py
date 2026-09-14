@@ -149,6 +149,9 @@ def build_pdf(matrix):
     cream,forest,sage,taupe=map(cmyk,(CREAM,FOREST,SAGE,TAUPE))
     c.setFillColor(cream); c.rect(0,0,pw,ph,stroke=0,fill=1)
 
+    def X(v): return v*S
+    def Y(v): return ph-v*S
+
     # High-contrast vector Fir Group logo for the cream background.
     cx,cy,r=X(590),Y(148),X(105)
     c.setStrokeColor(forest); c.setFillColor(forest); c.setLineWidth(X(8))
