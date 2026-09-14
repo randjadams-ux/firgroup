@@ -26,8 +26,8 @@ FONT_BOLD="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FONT_SERIF="/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"
 FONT_SERIF_BOLD="/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
 
-PNG_NAME="Fir-Group-GotPrint-Front-v4-2100x1400-350DPI.png"
-PDF_NAME="Fir-Group-GotPrint-Front-v4-6x4-Print.pdf"
+PNG_NAME="Fir-Group-GotPrint-Front-v5-2100x1400-350DPI.png"
+PDF_NAME="Fir-Group-GotPrint-Front-v5-6x4-Print.pdf"
 
 def ft(path,size):
     return ImageFont.truetype(path,size)
@@ -74,14 +74,17 @@ def build_png():
     hero=cover(Image.open(ROOT/"assets"/"fir-group-hero.jpeg").convert("RGB"),W,photo_h)
     img.paste(hero,(0,photo_top))
 
-    # Clean text-only service row.
-    centered(d,(300,1015),"LAW FIRM",ft(FONT_BOLD,62),FOREST)
-    centered(d,(1000,1010),"WORKPLACE\nINVESTIGATIONS",ft(FONT_BOLD,55),FOREST,10)
-    centered(d,(1740,1010),"TECHNOLOGY & AI\nCONSULTING",ft(FONT_BOLD,50),FOREST,10)
-    d.ellipse((576,996,610,1030),fill=SEPARATOR)
-    d.ellipse((1383,996,1417,1030),fill=SEPARATOR)
+    # Three-firm hierarchy: firm names lead, service descriptions support.
+    centered(d,(325,1000),"Fir Law Group",ft(FONT_SERIF_BOLD,66),FOREST)
+    centered(d,(1020,1000),"Fir Forensics",ft(FONT_SERIF_BOLD,66),FOREST)
+    centered(d,(1750,1000),"Fir Solutions",ft(FONT_SERIF_BOLD,66),FOREST)
+    centered(d,(325,1088),"LAW FIRM",ft(FONT_BOLD,35),FOREST)
+    centered(d,(1020,1088),"WORKPLACE INVESTIGATIONS",ft(FONT_BOLD,31),FOREST)
+    centered(d,(1750,1088),"TECHNOLOGY & AI CONSULTING",ft(FONT_BOLD,28),FOREST)
+    d.ellipse((665,983,699,1017),fill=SEPARATOR)
+    d.ellipse((1388,983,1422,1017),fill=SEPARATOR)
 
-    centered(d,(1010,1267),"firgroup.org",ft(FONT_SERIF_BOLD,105),FOREST)
+    centered(d,(1010,1272),"firgroup.org",ft(FONT_BOLD,55),FOREST)
     qr,matrix=qr_asset(145)
     img.paste(qr,(1905,1195))
     img.save(OUT/PNG_NAME,dpi=(350,350),optimize=True)
@@ -111,14 +114,17 @@ def build_pdf(matrix):
 
     c.drawImage(str(ROOT/"assets"/"fir-group-hero.jpeg"),0,Y(860),width=pw,height=X(490),preserveAspectRatio=False)
 
-    pdf_center(c,X(300),Y(1034),"LAW FIRM","FirBold",12.75,forest)
-    pdf_center(c,X(1000),Y(993),"WORKPLACE\nINVESTIGATIONS","FirBold",11.3,forest,13.2)
-    pdf_center(c,X(1740),Y(993),"TECHNOLOGY & AI\nCONSULTING","FirBold",10.3,forest,12.4)
+    pdf_center(c,X(325),Y(1024),"Fir Law Group","FirSerifBold",13.6,forest)
+    pdf_center(c,X(1020),Y(1024),"Fir Forensics","FirSerifBold",13.6,forest)
+    pdf_center(c,X(1750),Y(1024),"Fir Solutions","FirSerifBold",13.6,forest)
+    pdf_center(c,X(325),Y(1100),"LAW FIRM","FirBold",7.2,forest)
+    pdf_center(c,X(1020),Y(1100),"WORKPLACE INVESTIGATIONS","FirBold",6.35,forest)
+    pdf_center(c,X(1750),Y(1100),"TECHNOLOGY & AI CONSULTING","FirBold",5.75,forest)
     c.setFillColor(sep)
-    c.circle(X(593),Y(1013),X(17),stroke=0,fill=1)
-    c.circle(X(1400),Y(1013),X(17),stroke=0,fill=1)
+    c.circle(X(682),Y(1000),X(17),stroke=0,fill=1)
+    c.circle(X(1405),Y(1000),X(17),stroke=0,fill=1)
 
-    pdf_center(c,X(1010),Y(1300),"firgroup.org","FirSerifBold",21.6,forest)
+    pdf_center(c,X(1010),Y(1290),"firgroup.org","FirBold",11.3,forest)
 
     n=len(matrix); size=X(145); module=size/n; ox=X(1905); oy=Y(1195+145)
     c.setFillColor(HexColor("#FFFFFF")); c.rect(ox,oy,size,size,stroke=0,fill=1)
@@ -141,8 +147,8 @@ def validate():
     pdf=PdfReader(str(OUT/PDF_NAME))
     box=pdf.pages[0].mediabox
     assert abs(float(box.width)-432)<0.1 and abs(float(box.height)-288)<0.1
-    (OUT/"VALIDATION-v4.txt").write_text(
-        "PASS\nDesign: approved clean text-only front\nPNG: 2100 x 1400 pixels, 350 DPI\nPDF: 6.000 x 4.000 inches\nQR decoded: https://firgroup.org\nFull-bleed header, photograph, and cream field reach page edges\n"
+    (OUT/"VALIDATION-v5.txt").write_text(
+        "PASS\nDesign: approved three-firm hierarchy front\nPNG: 2100 x 1400 pixels, 350 DPI\nPDF: 6.000 x 4.000 inches\nQR decoded: https://firgroup.org\nFull-bleed header, photograph, and cream field reach page edges\n"
     )
 
 if __name__=="__main__":
